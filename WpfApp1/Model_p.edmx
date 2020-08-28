@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MIAPOModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Instruction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameIns" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Instructor" Type="int" Nullable="false" />
+          <Property Name="DateCompletion" Type="date" Nullable="false" />
+          <Property Name="RePassDate" Type="date" />
+          <Property Name="violations" Type="nvarchar" MaxLength="500" />
+          <Property Name="Planned" Type="bit" Nullable="false" />
+          <Property Name="PrimeryIns" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="JournalAccounting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Instruction_FK" Type="int" Nullable="false" />
+          <Property Name="Employer_FK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeRole" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Instruction_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Instruction">
+              <PropertyRef Name="Instructor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalAccounting_Instruction">
+          <End Role="Instruction" Type="Self.Instruction" Multiplicity="1" />
+          <End Role="JournalAccounting" Type="Self.JournalAccounting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instruction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JournalAccounting">
+              <PropertyRef Name="Instruction_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalAccounting_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="JournalAccounting" Type="Self.JournalAccounting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JournalAccounting">
+              <PropertyRef Name="Employer_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MIAPOModelContainer">
+          <EntitySet Name="Instruction" EntityType="Self.Instruction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JournalAccounting" EntityType="Self.JournalAccounting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Instruction_Users" Association="Self.FK_Instruction_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Instruction" EntitySet="Instruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalAccounting_Instruction" Association="Self.FK_JournalAccounting_Instruction">
+            <End Role="Instruction" EntitySet="Instruction" />
+            <End Role="JournalAccounting" EntitySet="JournalAccounting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalAccounting_Users" Association="Self.FK_JournalAccounting_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="JournalAccounting" EntitySet="JournalAccounting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MIAPOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Instruction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameIns" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Instructor" Type="Int32" Nullable="false" />
+          <Property Name="DateCompletion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RePassDate" Type="DateTime" Precision="0" />
+          <Property Name="violations" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Planned" Type="Boolean" Nullable="false" />
+          <Property Name="PrimeryIns" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Instruction_Users" FromRole="Instruction" ToRole="Users" />
+          <NavigationProperty Name="JournalAccounting" Relationship="Self.FK_JournalAccounting_Instruction" FromRole="Instruction" ToRole="JournalAccounting" />
+        </EntityType>
+        <EntityType Name="JournalAccounting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Instruction_FK" Type="Int32" Nullable="false" />
+          <Property Name="Employer_FK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Instruction" Relationship="Self.FK_JournalAccounting_Instruction" FromRole="JournalAccounting" ToRole="Instruction" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_JournalAccounting_Users" FromRole="JournalAccounting" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeRole" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Role" FromRole="Role" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Instruction" Relationship="Self.FK_Instruction_Users" FromRole="Users" ToRole="Instruction" />
+          <NavigationProperty Name="JournalAccounting" Relationship="Self.FK_JournalAccounting_Users" FromRole="Users" ToRole="JournalAccounting" />
+          <NavigationProperty Name="Role1" Relationship="Self.FK_Users_Role" FromRole="Users" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Instruction_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Instruction" Type="Self.Instruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Instruction">
+              <PropertyRef Name="Instructor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalAccounting_Instruction">
+          <End Role="Instruction" Type="Self.Instruction" Multiplicity="1" />
+          <End Role="JournalAccounting" Type="Self.JournalAccounting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instruction">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JournalAccounting">
+              <PropertyRef Name="Instruction_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JournalAccounting_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="JournalAccounting" Type="Self.JournalAccounting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JournalAccounting">
+              <PropertyRef Name="Employer_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MIAPOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Instruction" EntityType="Self.Instruction" />
+          <EntitySet Name="JournalAccounting" EntityType="Self.JournalAccounting" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Instruction_Users" Association="Self.FK_Instruction_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Instruction" EntitySet="Instruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalAccounting_Instruction" Association="Self.FK_JournalAccounting_Instruction">
+            <End Role="Instruction" EntitySet="Instruction" />
+            <End Role="JournalAccounting" EntitySet="JournalAccounting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JournalAccounting_Users" Association="Self.FK_JournalAccounting_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="JournalAccounting" EntitySet="JournalAccounting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Role" Association="Self.FK_Users_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MIAPOModelContainer" CdmEntityContainer="MIAPOEntities">
+          <EntitySetMapping Name="Instruction">
+            <EntityTypeMapping TypeName="MIAPOModel.Instruction">
+              <MappingFragment StoreEntitySet="Instruction">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameIns" ColumnName="NameIns" />
+                <ScalarProperty Name="Instructor" ColumnName="Instructor" />
+                <ScalarProperty Name="DateCompletion" ColumnName="DateCompletion" />
+                <ScalarProperty Name="RePassDate" ColumnName="RePassDate" />
+                <ScalarProperty Name="violations" ColumnName="violations" />
+                <ScalarProperty Name="Planned" ColumnName="Planned" />
+                <ScalarProperty Name="PrimeryIns" ColumnName="PrimeryIns" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JournalAccounting">
+            <EntityTypeMapping TypeName="MIAPOModel.JournalAccounting">
+              <MappingFragment StoreEntitySet="JournalAccounting">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Instruction_FK" ColumnName="Instruction_FK" />
+                <ScalarProperty Name="Employer_FK" ColumnName="Employer_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="MIAPOModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TypeRole" ColumnName="TypeRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MIAPOModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

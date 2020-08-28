@@ -20,9 +20,27 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        MIAPOEntities db = new MIAPOEntities();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            var user = db.Users.AsNoTracking().FirstOrDefault(u => u.Login == LoginB.Text && u.Password == PasswordB.Password);
+            if (user == null) MessageBox.Show("Пользователь с таким именем не найден!");
+            else 
+
+        
+
+
+                }
+
+        private void Reg_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

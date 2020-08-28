@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Autorisation" Height="450" Width="300" ResizeMode="NoResize" WindowStyle="ToolWindow">
     <Grid>
-        
+        <Label Content="Авторизация" HorizontalAlignment="Left" Margin="37,42,0,0" VerticalAlignment="Top" Height="64" Width="223" FontSize="36" FontFamily="Arial"/>
+        <TextBox x:Name="LoginB" HorizontalAlignment="Left" Height="38" Margin="37,154,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="213" Background="#FFE8E8E8" FontSize="24" BorderThickness="0" ClipToBounds="True" SnapsToDevicePixels="True" RenderTransformOrigin="0.5,0.5"/>
+        <PasswordBox x:Name="PasswordB" HorizontalAlignment="Left" Height="38" Margin="37,223,0,0" VerticalAlignment="Top" Width="213" Background="#FFE8E8E8" FontSize="24" BorderThickness="0" ClipToBounds="True" />
+        <Button Content="Войти" HorizontalAlignment="Left" Margin="79,301,0,0" VerticalAlignment="Top" Width="128" Height="33" Background="#FFD9ECA7" Click="Login_Click"/>
+        <Label Content="Логин" HorizontalAlignment="Left" Margin="37,128,0,0" VerticalAlignment="Top" Width="66"/>
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="37,197,0,0" VerticalAlignment="Top" Width="66"/>
+        <Button Content="Регистрация" HorizontalAlignment="Left" Margin="79,339,0,0" VerticalAlignment="Top" Width="128" Height="33" Background="#FFA7DFEC" Click="Reg_Click"/>
+
     </Grid>
 </Window>
